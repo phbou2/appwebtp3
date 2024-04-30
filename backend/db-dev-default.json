@@ -4,6 +4,7 @@
       "email": "test@test.com",
       "password": "$2a$10$/U4TD6TdllwpkXLdBzoagepGDpOGcRFTS6VHAnYGNeCKsuhpEWmX2",
       "name": "Emmett Brown",
+      "role": "Teacher",
       "id": 1
     }
   ],

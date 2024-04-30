@@ -19,22 +19,7 @@ onMounted(() => {
   authStore.clearError()
 })
 
-const login = async () => {
-  // Validation manuelle avant la soumission
-  const result = await validate({})
-  if (!result.valid) {
-    return // Arrête la fonction si la validation échoue
-  }
-
-  await authStore.login({
-    email: email.value,
-    password: password.value
-  })
-
-  if (!authStore.authServiceError) {
-    router.push({ name: 'Profile' })
-  }
-}
+const register = async () => {}
 
 // Fonction pour vérifier si un champ est vide, utilisée dans les règles de vee-validate
 const isRequired = (value: any) => (!value ? 'Ce champ est requis.' : true)
@@ -46,7 +31,7 @@ const isRequired = (value: any) => (!value ? 'Ce champ est requis.' : true)
     <div class="container my-5">
       <div class="row justify-content-center">
         <!-- avec VeeValidate on utilise Form au lieu de form et pas de .prevent comme dans l'exemple de Vue Router.... -->
-        <Form @submit="login">
+        <Form @submit="register">
           <div class="mb-3">
             <label class="form-label" for="email-input">Courriel</label>
             <!-- avec VeeValidate, on remplace les input par Field et on lui donne un nom -->
