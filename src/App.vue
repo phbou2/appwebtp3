@@ -1,6 +1,15 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+//import { RouterView } from 'vue-router'
 import NavigationBar from './components/NavigationBar.vue'
+import { ref } from 'vue'
+
+const name = ref('')
+/*
+const startGame = async () => {
+  if (!name.value || !selectedShip.value) {
+    alert('Veuillez remplir tous les champs.')
+    return
+  }*/
 </script>
 
 <template>
@@ -11,6 +20,7 @@ import NavigationBar from './components/NavigationBar.vue'
     </div>
   </header>
   <main>
+
     <!-- RouterView (ou router-link) est la balise fournie par Vue Router qui permet d'afficher dynamiquement la "view" correspondante à la route actuelle de l'application. Cette directive ne devrait être présente qu'une seule fois. Lorsque l'utilisateur clique sur un des liens de navigation, Vue Router charge la "view" correspondante et l'affiche automatiquement à l'emplacement de la balise RouterView. -->
     <RouterView />
   </main>

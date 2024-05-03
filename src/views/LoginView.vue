@@ -21,7 +21,10 @@ onMounted(() => {
 
 const login = async () => {
   // Validation manuelle avant la soumission
-  const result = await validate({});
+  const result = await validate({
+    email: email.value,
+    password: password.value
+  });
   if (!result.valid) {
     return; // Arrête la fonction si la validation échoue
   }
@@ -37,51 +40,70 @@ const login = async () => {
 };
 
 // Fonction pour vérifier si un champ est vide, utilisée dans les règles de vee-validate
-const isRequired = value => !value ? 'Ce champ est requis.' : true;
+const isRequired = (value: string) => !value ? 'Ce champ est requis.' : true;
 </script>
 
 <template>
+
   <div>
     <h1>Connexion</h1>
-    <div class="container my-5">
-      <div class="row justify-content-center">
-        <!-- avec VeeValidate on utilise Form au lieu de form et pas de .prevent comme dans l'exemple de Vue Router.... -->
-        <Form @submit="login">
-          <div class="mb-3">
-            <label class="form-label" for="email-input">Courriel</label>
-            <!-- avec VeeValidate, on remplace les input par Field et on lui donne un nom -->
-            <!-- le nom est ensuite utilisé pour afficher les messages d'erreur dans ErrorMessage -->
-            <!-- le message d'erreur provient de la règle isRequired déclarée en haut -->
-            <Field
-              class="form-control"
-              id="email-input"
-              name="email-input"
-              type="email"
-              :rules="isRequired"
-              v-model="email"
-            />
-            <ErrorMessage class="text-danger" name="email-input" />
+    <ul>
+      <div class="container d-flex justify-content-center">
+
+        <div class="card col bg-secondary">
+          <div class="card-header bg-danger d-flex justify-content-center">
+            <h3>Login</h3>
           </div>
-          <div class="mb-3">
-            <label class="form-label" for="password-input">Mot de passe</label>
-            <Field
-              class="form-control"
-              id="password-input"
-              name="password-input"
-              type="password"
-              :rules="isRequired"
-              v-model="password"
-            />
-            <ErrorMessage class="text-danger" name="password-input" />
+          <div class="card-body">
+            <div class="row">
+              <Form @submit="login">
+
+                <div class="col py-2">
+                  <label for="email-input">Email</label>
+                  <div class="form-group">
+                    <Field
+                      class="form-control"
+                      id="email-input"
+                      name="email-input"
+                      type="email"
+                      :rules="isRequired"
+                      v-model="email"
+                      />
+                      <ErrorMessage class="text-warning" name="email-input" />
+                  </div>
+                </div>
+
+                <div class="col py-2">
+                  <label for="password-input">Password</label>
+                  <div class="form-group">  
+                    <Field
+                      class="form-control"
+                      id="password-input"
+                      name="password-input"
+                      type="password"
+                      :rules="isRequired"
+                      v-model="password"
+                    />
+                    <ErrorMessage class="text-warning" name="password-input" />
+                  </div>
+                </div>
+                <div class="p-3 mb-2 bg-danger text-white" v-if="authServiceError">
+                  {{ authServiceError }}
+                </div>
+                <button class="btn btn-primary" type="submit">Se connecter</button>
+              </Form>
+            </div>
+          
           </div>
-          <div class="p-3 mb-2 bg-danger text-white" v-if="authServiceError">
-            {{ authServiceError }}
-          </div>
-          <button class="btn btn-primary" type="submit">Se connecter</button>
-        </Form>
+
+        </div>
+
       </div>
-    </div>
+    </ul>
+
   </div>
+
+
 </template>
 
 <style scoped></style>
