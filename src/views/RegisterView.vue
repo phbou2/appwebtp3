@@ -1,17 +1,24 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
-import { Field, Form, ErrorMessage, defineRule, validate } from 'vee-validate'
+import { Field, Form, ErrorMessage, defineRule } from 'vee-validate'
 import { required } from '@vee-validate/rules'
 import { useAuthStore } from '../stores/authStore'
 import { useRouter } from 'vue-router'
+import { useToast } from 'vue-toast-notification'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
+import 'vue-toast-notification/dist/theme-sugar.css'
 
-// Définir les règles de validation
 defineRule('isRequired', required)
 
 const router = useRouter()
 const authStore = useAuthStore()
+const toast = useToast()
+const isLoading = ref(false)
+
 const email = ref('')
 const password = ref('')
+const name = ref('')
 
 const authServiceError = computed(() => authStore.authServiceError)
 
@@ -19,30 +26,59 @@ onMounted(() => {
   authStore.clearError()
 })
 
-const register = async () => {}
+const register = async () => {
+  isLoading.value = true
+
+  await authStore.register({
+    email: email.value,
+    password: password.value,
+    name: name.value
+  })
+
+  isLoading.value = false
+
+  if (!authStore.authServiceError) {
+    toast.success('Student registered successfully', { duration: 5000 })
+    router.push({ name: 'Profile' })
+  }
+}
 
 // Fonction pour vérifier si un champ est vide, utilisée dans les règles de vee-validate
 const isRequired = (value: any) => (!value ? 'Ce champ est requis.' : true)
+
+const isValidEmail = (value: any) => {
+  if (!value || !/^\S+@\S+\.\S+$/.test(value)) {
+    return 'Adresse email invalide'
+  }
+  return true
+}
 </script>
 
 <template>
   <div>
-    <h1>Connexion</h1>
+    <h1>Créer un Utilisateur</h1>
     <div class="container my-5">
       <div class="row justify-content-center">
-        <!-- avec VeeValidate on utilise Form au lieu de form et pas de .prevent comme dans l'exemple de Vue Router.... -->
         <Form @submit="register">
           <div class="mb-3">
+            <label class="form-label" for="name-input">Nom</label>
+            <Field
+              class="form-control"
+              id="name-input"
+              name="name-input"
+              :rules="isRequired"
+              v-model="name"
+            />
+            <ErrorMessage class="text-danger" name="name-input" />
+          </div>
+          <div class="mb-3">
             <label class="form-label" for="email-input">Courriel</label>
-            <!-- avec VeeValidate, on remplace les input par Field et on lui donne un nom -->
-            <!-- le nom est ensuite utilisé pour afficher les messages d'erreur dans ErrorMessage -->
-            <!-- le message d'erreur provient de la règle isRequired déclarée en haut -->
             <Field
               class="form-control"
               id="email-input"
               name="email-input"
               type="email"
-              :rules="isRequired"
+              :rules="[isRequired, isValidEmail]"
               v-model="email"
             />
             <ErrorMessage class="text-danger" name="email-input" />
@@ -66,6 +102,7 @@ const isRequired = (value: any) => (!value ? 'Ce champ est requis.' : true)
         </Form>
       </div>
     </div>
+    <Loading :active="isLoading" />
   </div>
 </template>
 

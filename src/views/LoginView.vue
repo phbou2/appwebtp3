@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
-import { Field, Form, ErrorMessage, defineRule, validate } from 'vee-validate'
+import { Field, Form, ErrorMessage, defineRule } from 'vee-validate'
 import { required } from '@vee-validate/rules'
 import { useAuthStore } from '../stores/authStore'
 import { useRouter } from 'vue-router'
@@ -20,12 +20,7 @@ onMounted(() => {
 })
 
 const login = async () => {
-  // Validation manuelle avant la soumission
-  const result = await validate({})
-  if (!result.valid) {
-    return // Arrête la fonction si la validation échoue
-  }
-
+  //Enlevé le validate() car la validation se fait en hot-reload
   await authStore.login({
     email: email.value,
     password: password.value
@@ -38,6 +33,13 @@ const login = async () => {
 
 // Fonction pour vérifier si un champ est vide, utilisée dans les règles de vee-validate
 const isRequired = (value: any) => (!value ? 'Ce champ est requis.' : true)
+
+const isValidEmail = (value: any) => {
+  if (!value || !/^\S+@\S+\.\S+$/.test(value)) {
+    return 'Adresse email invalide'
+  }
+  return true
+}
 </script>
 
 <template>
@@ -57,7 +59,7 @@ const isRequired = (value: any) => (!value ? 'Ce champ est requis.' : true)
               id="email-input"
               name="email-input"
               type="email"
-              :rules="isRequired"
+              :rules="[isRequired, isValidEmail]"
               v-model="email"
             />
             <ErrorMessage class="text-danger" name="email-input" />

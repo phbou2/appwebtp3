@@ -2,11 +2,16 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { authService } from '../services/authService'
 import jwtDecode from 'jwt-decode'
+import axios from 'axios'
 
 interface DecodedToken {
   sub: string
   exp: number
 }
+
+const API_BASE_URL = 'http://127.0.0.1:3000'
+
+const DEFAULT_ROLE = 'Student'
 
 export const useAuthStore = defineStore('authStoreId', () => {
   const token = ref('')
@@ -54,11 +59,23 @@ export const useAuthStore = defineStore('authStoreId', () => {
     }
   }
 
-  function refreshToken() {
-    logout()  // Simplified action for token refresh: logs out the user
+  async function register(credential: { email: string; password: string; name: string }) {
+    try {
+      clearError()
+
+      const modifiedCredential = { ...credential, role: DEFAULT_ROLE }
+
+      await axios.post(`${API_BASE_URL}/register`, modifiedCredential)
+    } catch (error: any) {
+      authServiceError.value = error.message || 'Unknown error'
+    }
   }
 
-  return { 
+  function refreshToken() {
+    logout() // Simplified action for token refresh: logs out the user
+  }
+
+  return {
     token,
     authServiceError,
     isLoggedIn,
@@ -68,6 +85,7 @@ export const useAuthStore = defineStore('authStoreId', () => {
     logout,
     loadPersistedToken,
     login,
+    register,
     refreshToken
   }
 })

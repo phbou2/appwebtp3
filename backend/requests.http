@@ -23,7 +23,8 @@ content-type: application/json
 {
   "email": "new@test.com",
   "password": "test",
-  "name": "Adélard Rochon"
+  "name": "Adélard Rochon",
+  "role": "Student"
 }
 
 
