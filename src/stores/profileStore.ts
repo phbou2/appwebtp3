@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { userService } from '../services/userService'
 import { useAuthStore } from './authStore'
 
@@ -7,6 +7,7 @@ export const useProfileStore = defineStore('profileStoreId', () => {
   const email = ref('')
   const name = ref('')
   const role = ref('')
+  const isTeacher = computed(() => role.value === 'Teacher')
   const onError = ref(false)
 
   function _initializeProfile(profile: { email: string; name: string; role: string }) {
@@ -33,6 +34,7 @@ export const useProfileStore = defineStore('profileStoreId', () => {
     name,
     role,
     onError,
-    getProfile
+    getProfile,
+    isTeacher
   }
 })

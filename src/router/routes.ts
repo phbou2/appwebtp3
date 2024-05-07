@@ -4,6 +4,7 @@ import LoginView from '../views/LoginView.vue'
 import AboutView from '../views/AboutView.vue'
 import NotFound from '../views/NotFoundView.vue'
 import RegisterView from '../views/RegisterView.vue'
+import DeleteView from '../views/DeleteView.vue'
 
 const routes = [
   {
@@ -33,6 +34,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: LoginView
+  },
+  {
+    path: '/delete',
+    name: 'Delete',
+    component: DeleteView
   },
   {
     path: '/:pathMatch(.*)*',

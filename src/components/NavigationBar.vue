@@ -48,16 +48,6 @@ function logout() {
       </div>
       <div class="d-flex">
         <div class="navbar-nav ml-auto">
-          <RouterLink
-            class="nav-link"
-            :class="{ active: $route.name == 'Register' }"
-            v-if="isLoggedIn"
-            :to="{ name: 'Register' }"
-          >
-            Créer un utilisateur
-          </RouterLink>
-        </div>
-        <div class="navbar-nav ml-auto">
           <a class="nav-link" @click="logout" v-if="isLoggedIn" href="#"> Se déconnecter </a>
           <RouterLink
             v-else

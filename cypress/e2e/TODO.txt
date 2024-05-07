@@ -1,0 +1,12 @@
+En tant qu'étudiant, je peux:
+- Me connecter //DONE
+- Me déconnecter //DONE
+- Changer mon mot de passe
+- Créer une question
+- Supprimer une question
+En tant que prof, je peux:
+- Me connecter
+- Me déconnecter
+- Changer mon nom complet ou mon mot de passe
+- Créer un étudiant
+- Supprimer un étudiant

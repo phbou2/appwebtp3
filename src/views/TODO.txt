@@ -1,0 +1,45 @@
+TEACHER :
+
+- Ajouter un élève // DONE
+
+- Supprimer un élève
+
+- Voir les questions complètes (description, catégorie, etc.)
+
+- Supprimer une question
+
+- Créer des catégories de questions
+
+- Me connecter
+
+- Me déconnecter
+
+- Changer mon nom complet ou mon mot de passe
+
+- Donner de la vie à un étudiant (exemple s'il pose une bonne question, etc.)
+
+- Enlever de la vie à un étudiant (exemple s'il pose trop de questions)
+
+
+
+STUDENT :
+
+- Lever ma main
+
+- Baisser sa main
+
+- Écrire une courte question
+
+- Sélectionner sa priorité (P1 à P5)
+
+- Choisir une catégorie de questions
+
+- Me connecter
+
+- Me déconnecter
+
+- Changer mon mot de passe
+
+- Pouvoir donner de la vie à un prof s'il a bien répondu et nous a aidés
+
+- Enlever de la vie à un professeur (s'il prend trop de temps à venir répondre)

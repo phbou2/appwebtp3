@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { parseAxiosError } from '../shared/parseAxiosError'
 
-async function getToken (credential) {
+async function getToken(credential: any) {
   try {
     // TODO : utiliser une variable d'environnement pour l'url de l'API REST
     const response = await axios.post('http://127.0.0.1:3000/login', {

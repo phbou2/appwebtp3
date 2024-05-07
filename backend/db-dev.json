@@ -8,31 +8,11 @@
       "id": 1
     },
     {
-      "email": "wasdawd@dadsd.com",
-      "password": "$2a$10$pPtSibJLfl1W.17x34rpVuNGnWZ0kdIso575SmhFCfR/rues.ZkNC",
-      "name": "awdasda",
+      "email": "allo@gmail.com",
+      "password": "$2a$10$tDwZ/zKlxoc1oUMZy2HXQ.BXg8dHW7D9aLlu7ppn0mu36RggM0gHy",
+      "name": "allo",
+      "role": "Student",
       "id": 2
-    },
-    {
-      "email": "wadasd@akdma.com",
-      "password": "$2a$10$3yTXOhFo7ZNqGK/OKXy/MeaTGGkfRDo6i6tD8PSI8eCvMw0w1e0dS",
-      "name": "sadaw",
-      "role": "Student",
-      "id": 3
-    },
-    {
-      "email": "wadasd@asda.com",
-      "password": "$2a$10$Ke/pNvznS7a5XdEVU0n8N.WUP2qN7W7JKF7ibyxOynpeOpBbXxXG2",
-      "name": "wada",
-      "role": "Student",
-      "id": 4
-    },
-    {
-      "email": "test@sad.com",
-      "password": "$2a$10$USd7keMzgLei.bbDBkWeQ.AkNIbXK60VM6TzwGd0no27EFblp3b76",
-      "name": "test",
-      "role": "Student",
-      "id": 5
     }
   ],
   "comments": [

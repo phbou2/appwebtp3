@@ -1,10 +1,12 @@
-describe('Récits utilisateur', () => {
+describe('Récits utilisateur de type Teacher', () => {
+  const BACKEND_BASE_URL = 'http://127.0.0.1:3000'
+
   // On définit un utilisateur pour les tests. Cet utilisateur sera créé dans la base de données avant chaque test.
   const user = {
     email: 'mon@courriel.com',
     password: 'monmotdepasse',
     name: 'Bruce Lee',
-    role: 'Student'
+    role: 'Teacher'
   }
 
   // Exécuté avant chaque test
@@ -14,7 +16,7 @@ describe('Récits utilisateur', () => {
 
     // On ajoute l'utilisateur à la BD en utilisant la commande POST /register de notre API REST (serveur backend).
     // TODO : utiliser une variable d'environnement pour l'URL du serveur backend.
-    cy.request('POST', 'http://127.0.0.1:3000/register', {
+    cy.request('POST', BACKEND_BASE_URL + '/register', {
       email: user.email,
       password: user.password,
       name: user.name
