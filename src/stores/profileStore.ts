@@ -29,12 +29,38 @@ export const useProfileStore = defineStore('profileStoreId', () => {
     }
   }
 
+  async function getAllStudents() {
+    try {
+      onError.value = false
+
+      const users: any[] = await userService.getAllUsers()
+
+      const students: any[] = users.filter((user) => user.role === 'Student')
+
+      return students
+    } catch (error) {
+      onError.value = true
+    }
+  }
+
+  async function deleteUser(userId: string) {
+    try {
+      onError.value = false
+
+      await userService.deleteUser(userId)
+    } catch (error) {
+      onError.value = true
+    }
+  }
+
   return {
     email,
     name,
     role,
     onError,
     getProfile,
-    isTeacher
+    isTeacher,
+    getAllStudents,
+    deleteUser
   }
 })

@@ -1,9 +1,7 @@
 // Toutes les erreurs sont transformées en objet Error qui lui contient seulement un message d'erreur.
-export function parseAxiosError (axiosError) {
+export function parseAxiosError(axiosError: any) {
   if (isNetworkError(axiosError)) {
-    const error = new Error(
-      'Erreur réseau. Impossible de communiquer avec le serveur.'
-    )
+    const error = new Error('Erreur réseau. Impossible de communiquer avec le serveur.')
     return error
   } else {
     // Les messages d'erreurs générés par l'API REST proviennent de json-server-auth et sont en anglais (exemple: Incorrect password, Cannot find user, etc.)
@@ -15,7 +13,7 @@ export function parseAxiosError (axiosError) {
 }
 
 // Cette fonction permet de déterminer si une erreur est une erreur de réseau.
-function isNetworkError (error) {
+function isNetworkError(error: any) {
   // Si l'erreur ne contient pas de réponse, c'est qu'il y a eu un problème de réseau.
   return error.isAxiosError && !error.response
 }

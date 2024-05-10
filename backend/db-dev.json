@@ -6,13 +6,6 @@
       "name": "Emmett Brown",
       "role": "Teacher",
       "id": 1
-    },
-    {
-      "email": "allo@gmail.com",
-      "password": "$2a$10$tDwZ/zKlxoc1oUMZy2HXQ.BXg8dHW7D9aLlu7ppn0mu36RggM0gHy",
-      "name": "allo",
-      "role": "Student",
-      "id": 2
     }
   ],
   "comments": [
