@@ -15,9 +15,19 @@ async function getUserById(userId: string) {
   }
 }
 
-async function getAllStudents() {
+async function getAllUsers() {
   try {
-    const response = await axiosAuth.get(BACKEND_BASE_URL + '')
+    const response = await axiosAuth.get(BACKEND_BASE_URL + '/users')
+
+    return response.data
+  } catch (error) {
+    throw parseAxiosError(error)
+  }
+}
+
+async function deleteUser(userId: string) {
+  try {
+    await axiosAuth.delete(BACKEND_BASE_URL + '/users/' + userId)
   } catch (error) {
     throw parseAxiosError(error)
   }
@@ -25,5 +35,6 @@ async function getAllStudents() {
 
 export const userService = {
   getUserById,
-  getAllStudents
+  getAllUsers,
+  deleteUser
 }

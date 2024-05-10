@@ -38,7 +38,7 @@ const register = async () => {
   isLoading.value = false
 
   if (!authStore.authServiceError) {
-    toast.success('Student registered successfully', { duration: 5000 })
+    toast.success('Étudiant créé avec succès', { duration: 5000 })
     router.push({ name: 'Profile' })
   }
 }
@@ -56,7 +56,7 @@ const isValidEmail = (value: any) => {
 
 <template>
   <div>
-    <h1>Créer un Utilisateur</h1>
+    <h1 class="title">Créer un étudiant</h1>
     <div class="container my-5">
       <div class="row justify-content-center">
         <Form @submit="register">
@@ -98,7 +98,7 @@ const isValidEmail = (value: any) => {
           <div class="p-3 mb-2 bg-danger text-white" v-if="authServiceError">
             {{ authServiceError }}
           </div>
-          <button class="btn btn-primary" type="submit">Se connecter</button>
+          <button class="btn btn-primary" type="submit">Créer un étudiant</button>
         </Form>
       </div>
     </div>
@@ -106,4 +106,8 @@ const isValidEmail = (value: any) => {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.title {
+  padding-left: 20px;
+}
+</style>
