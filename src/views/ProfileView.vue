@@ -5,22 +5,30 @@ import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
 import { useAuthStore } from '../stores/authStore'
 import { useRouter } from 'vue-router'
+import { useQuestionStore } from '@/stores/questionStore'
 
 const authStore = useAuthStore()
 const router = useRouter()
 const profileStore = useProfileStore()
+const questionStore = useQuestionStore()
 
 const name = computed(() => profileStore.name)
 const email = computed(() => profileStore.email)
 const onError = computed(() => profileStore.onError)
 const isLoggedIn = computed(() => authStore.isLoggedIn)
 const isTeacher = computed(() => profileStore.isTeacher)
+const isStudent = computed(() => profileStore.isStudent)
+const isHandRaised = computed(() => questionStore.isHandRaised)
 const isLoading = ref(false)
+const questions = ref<any[] | undefined>(undefined)
+const updatedQuestions = ref<any[] | undefined>(undefined) //For front-end accessibility
 
 onMounted(async () => {
   isLoading.value = true
   try {
     await profileStore.getProfile()
+    questions.value = await questionStore.getAllQuestions()
+    await updateUserAndCategoryNames()
     if (onError.value) {
       // Utilisation d'une boîte de dialogue au lieu de 'confirm'
       confirm("Une erreur s'est produite lors de la récupération du profil de l'utilisateur.")
@@ -30,6 +38,37 @@ onMounted(async () => {
   }
   isLoading.value = false
 })
+
+function toggleHandRaised() {
+  questionStore.toggleHandRaised()
+}
+
+async function updateUserAndCategoryNames() {
+  if (!questions.value) {
+    return []
+  }
+
+  updatedQuestions.value = []
+
+  for (let i = 0; i < questions.value.length; i++) {
+    const question = questions.value[i]
+
+    const user = await profileStore.getUserById(question.userId)
+    const userName = user.name
+
+    const category = await questionStore.getCategoryById(question.categoryId)
+    const categoryName = category.name
+
+    const updatedQuestion = {
+      question: question.question,
+      userName: userName,
+      categoryName: categoryName,
+      priority: question.priority
+    }
+
+    updatedQuestions.value.push(updatedQuestion)
+  }
+}
 </script>
 
 <template>
@@ -37,7 +76,14 @@ onMounted(async () => {
     <h1>Profile</h1>
     <div>Nom: {{ isLoading ? 'Loading...' : name }}</div>
     <div>Courriel: {{ isLoading ? 'Loading...' : email }}</div>
-    <Loading :active="isLoading" />
+  </div>
+  <div>
+    <div v-for="question in updatedQuestions" :key="question.id">
+      <h3>{{ question.question }}</h3>
+      <p>Nom : {{ question.userName }}</p>
+      <p>Category ID: {{ question.categoryName }}</p>
+      <p>Priority: {{ question.priority }}</p>
+    </div>
   </div>
   <div class="container">
     <div class="row">
@@ -65,11 +111,10 @@ onMounted(async () => {
           <div>
             <div>
               <div class="py-2" v-if="isTeacher">
-                <button class="btn btn-primary col-6">
+                <button v-if="isLoggedIn" class="btn btn-primary col-6">
                   <RouterLink
                     class="nav-link"
                     :class="{ active: $route.name == 'Register' }"
-                    v-if="isLoggedIn"
                     :to="{ name: 'Register' }"
                   >
                     Créer un étudiant
@@ -82,7 +127,6 @@ onMounted(async () => {
                   <RouterLink
                     class="nav-link"
                     :class="{ active: $route.name == 'Delete' }"
-                    v-if="isLoggedIn"
                     :to="{ name: 'Delete' }"
                   >
                     Supprimer un étudiant
@@ -90,14 +134,39 @@ onMounted(async () => {
                 </button>
               </div>
 
-              <div class="py-2">
-                <button class="btn btn-primary col-6">create new category</button>
+              <div class="py-2" v-if="isTeacher">
+                <button v-if="isLoggedIn" class="btn btn-primary col-6">
+                  <RouterLink
+                    class="nav-link"
+                    :class="{ active: $route.name == 'CreateCategory' }"
+                    :to="{ name: 'CreateCategory' }"
+                  >
+                    Créer une nouvelle catégorie
+                  </RouterLink>
+                </button>
+              </div>
+              <div class="py-2" v-if="isStudent">
+                <button v-if="isLoggedIn" class="btn btn-primary col-6">
+                  <RouterLink
+                    class="nav-link"
+                    :class="{ active: $route.name == 'CreateQuestion' }"
+                    :to="{ name: 'CreateQuestion' }"
+                  >
+                    Poser une question
+                  </RouterLink>
+                </button>
+              </div>
+              <div class="py-2" v-if="isStudent">
+                <button v-if="isLoggedIn" class="btn btn-primary col-6" @click="toggleHandRaised">
+                  {{ isHandRaised ? 'Baisser la main' : 'Lever la main' }}
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <Loading :active="isLoading" />
   </div>
 </template>
 

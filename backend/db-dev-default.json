@@ -8,11 +8,19 @@
       "id": 1
     }
   ],
-  "comments": [
+  "questions": [
     {
       "userId": 1,
-      "comment": "J'ai inventé la machine à voyager dans le temps.",
-      "id": 1
+      "question": "J'ai inventé la machine à voyager dans le temps.",
+      "id": 1,
+      "categoryId": 1,
+      "priority": "Faible"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "bogue"
     }
   ]
 }

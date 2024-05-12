@@ -6,13 +6,61 @@
       "name": "Emmett Brown",
       "role": "Teacher",
       "id": 1
+    },
+    {
+      "email": "test2@gmail.com",
+      "password": "$2a$10$UTdxCfJ44nbMEoyWt9QM0O9pJ8eLfMSaQ3XhMqAzTpq5Wwef8s36q",
+      "name": "test2",
+      "role": "Student",
+      "id": 2
+    },
+    {
+      "email": "tette@gmail.com",
+      "password": "$2a$10$mirNvRV3jGvJr0gA5mD6GuWxUdaHGPJxfD3/UIHHwPY.vBI5HH9jO",
+      "name": "tete",
+      "role": "Student",
+      "id": 3
     }
   ],
-  "comments": [
+  "questions": [
     {
-      "userId": 1,
-      "comment": "J'ai inventé la machine à voyager dans le temps.",
-      "id": 1
+      "question": "wdad",
+      "userId": "2",
+      "categoryId": 2,
+      "priority": "Moyenne",
+      "id": 8
+    },
+    {
+      "question": "frsthfgfghsdghfmdhgsdfghsd",
+      "userId": "2",
+      "categoryId": 3,
+      "priority": "Urgente",
+      "id": 9
+    },
+    {
+      "question": "test mange marde",
+      "userId": "2",
+      "categoryId": 3,
+      "priority": "Importante",
+      "id": 10
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "bogue"
+    },
+    {
+      "name": "awsdadwa",
+      "id": 2
+    },
+    {
+      "name": "Allo",
+      "id": 3
+    },
+    {
+      "name": "mange marde lol",
+      "id": 4
     }
   ]
 }

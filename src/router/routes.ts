@@ -5,6 +5,8 @@ import AboutView from '../views/AboutView.vue'
 import NotFound from '../views/NotFoundView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import DeleteView from '../views/DeleteView.vue'
+import CreateCategoryView from '../views/CreateCategoryView.vue'
+import CreateQuestionView from '../views/CreateQuestionView.vue'
 
 const routes = [
   {
@@ -39,6 +41,16 @@ const routes = [
     path: '/delete',
     name: 'Delete',
     component: DeleteView
+  },
+  {
+    path: '/createCategory',
+    name: 'CreateCategory',
+    component: CreateCategoryView
+  },
+  {
+    path: '/createQuestion',
+    name: 'CreateQuestion',
+    component: CreateQuestionView
   },
   {
     path: '/:pathMatch(.*)*',

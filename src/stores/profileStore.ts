@@ -8,6 +8,7 @@ export const useProfileStore = defineStore('profileStoreId', () => {
   const name = ref('')
   const role = ref('')
   const isTeacher = computed(() => role.value === 'Teacher')
+  const isStudent = computed(() => role.value === 'Student')
   const onError = ref(false)
 
   function _initializeProfile(profile: { email: string; name: string; role: string }) {
@@ -53,6 +54,17 @@ export const useProfileStore = defineStore('profileStoreId', () => {
     }
   }
 
+  async function getUserById(userId: string) {
+    try {
+      onError.value = false
+
+      const response = await userService.getUserById(userId)
+      return response
+    } catch (error) {
+      onError.value = true
+    }
+  }
+
   return {
     email,
     name,
@@ -61,6 +73,8 @@ export const useProfileStore = defineStore('profileStoreId', () => {
     getProfile,
     isTeacher,
     getAllStudents,
-    deleteUser
+    deleteUser,
+    isStudent,
+    getUserById
   }
 })

@@ -2,17 +2,17 @@ TEACHER :
 
 - Ajouter un élève // DONE
 
-- Supprimer un élève
+- Supprimer un élève //DONE
 
-- Voir les questions complètes (description, catégorie, etc.)
+- Voir les questions complètes (description, catégorie, etc.) //DONE
 
 - Supprimer une question
 
-- Créer des catégories de questions
+- Créer des catégories de questions //DONE
 
-- Me connecter
+- Me connecter //DONE
 
-- Me déconnecter
+- Me déconnecter //DONE
 
 - Changer mon nom complet ou mon mot de passe
 
@@ -24,22 +24,31 @@ TEACHER :
 
 STUDENT :
 
-- Lever ma main
+- Lever ma main //DONE
 
-- Baisser sa main
+- Baisser sa main //DONE
 
-- Écrire une courte question
+- Écrire une courte question //DONE
 
-- Sélectionner sa priorité (P1 à P5)
+- Sélectionner sa priorité (P1 à P5) //DONE
 
-- Choisir une catégorie de questions
+- Choisir une catégorie de questions //DONE
 
-- Me connecter
+- Me connecter //DONE
 
-- Me déconnecter
+- Me déconnecter //DONE
 
 - Changer mon mot de passe
 
 - Pouvoir donner de la vie à un prof s'il a bien répondu et nous a aidés
 
 - Enlever de la vie à un professeur (s'il prend trop de temps à venir répondre)
+
+***SUPPRIMER RETROACTIVEMENT TOUT CE QUI EST RELIE A UNE RESSOURCE SI ELLE SE FAIT SUPPRIMER***
+
+
+***PRENDRE LES ROUTES DE FRONT-END EN CONSIDERATION : 
+JUSTE AJOUTER UN V-IF:ISTEACHER DANS LES ROUTES NON ACCESSIBLES POUR ETUDIANT
+V-IF:ISETUDIANT DANS LES ROUTES NON ACCESSIBLES POUR TEACHER
+
+PAS BESOIN DE PRENDRE EN CONSIDERATION LA PROTECTION DES ROUTES EN BACK-END
