@@ -1,4 +1,6 @@
 describe('Récits utilisateur', () => {
+  const BACKEND_BASE_URL = 'http://127.0.0.1:3000'
+
   // On définit un utilisateur pour les tests. Cet utilisateur sera créé dans la base de données avant chaque test.
   const user = {
     email: 'mon@courriel.com',
@@ -9,63 +11,89 @@ describe('Récits utilisateur', () => {
 
   // Exécuté avant chaque test
   beforeEach(() => {
-    // On réinitialise la base de données en appelant le script backend:cypress:seed qui se trouve dans le package.json. Ce script copie le fichier db-cypress-default.json dans db-cypress.json qui est utilisé par le serveur backend. Ainsi, on a une base de données propre pour chaque test.
+    // On réinitialise la base de données en appelant le script backend:cypress:seed qui se trouve dans le package.json.
     cy.exec('npm run backend:cypress:seed')
 
     // On ajoute l'utilisateur à la BD en utilisant la commande POST /register de notre API REST (serveur backend).
-    // TODO : utiliser une variable d'environnement pour l'URL du serveur backend.
-    cy.request('POST', 'http://127.0.0.1:3000/register', {
+    cy.request('POST', BACKEND_BASE_URL + '/register', {
       email: user.email,
       password: user.password,
       name: user.name
     })
   })
 
-  // Les tests sont écrits sous forme de récits utilisateur. Voir les notes de cours à ce sujet.
+  // Les tests sont écrits sous forme de récits utilisateur.
   it("je peux accéder à la page d'accueil", () => {
-    // L'instruction `cy` permet d'exécuter des commandes de Cypress.
-    // Ici, on visite la page d'accueil.
     cy.visit('/')
-
-    // On vérifie que la page contient, dans une balise H1, le texte "Accueil"
     cy.contains('h1', /accueil/i)
   })
 
   it('je peux accéder à la page à propos', () => {
     cy.visit('/about')
-
     cy.contains('h1', /à propos/i)
   })
 
-  it('je peux me connecter - version 1 ', () => {
+  it('je peux me connecter - version 1', () => {
     cy.visit('/login')
-
-    // On utilise .get pour sélectionner dans le DOM un élément input dont l'attribut name est email-input. Ensuite, .type est utilisé pour saisir du texte dans cet élément.
     cy.get('input[name=email-input]').type(user.email)
     cy.get('input[name=password-input]').type(user.password)
-    // On utilise .get pour sélectionner dans le DOM un élément bonton dont l'attribut type est submit). Ensuite, .click est utilisé pour cliquer sur cet élément.
     cy.get('button[type=submit]').click()
-
     cy.contains(/déconnecter/i)
   })
 
   it('je peux me connecter - version 2', () => {
-    // Ici on utilise la commande login qui est définie dans le fichier cypress/support/commands.js. Cette commande est disponible dans tous les tests et évite de répéter le code de connexion. Cette version est plus courte et plus lisible.
     cy.login(user.email, user.password)
   })
 
   it('je peux me déconnecter', () => {
     cy.login(user.email, user.password)
-
     cy.contains(/déconnecter/i).click()
-
     cy.contains(/connexion/i)
   })
 
   it('je peux voir mon profil', () => {
     cy.login(user.email, user.password)
-
     cy.contains(user.name)
     cy.contains(user.email)
+  })
+
+  it('je peux changer mon mot de passe', () => {
+    cy.login(user.email, user.password)
+    cy.visit('/changeCredentials')
+    cy.get('input[name=current-password-input]').type(user.password)
+    cy.get('input[name=new-password-input]').type('newpassword')
+    cy.get('input[name=confirm-password-input]').type('newpassword')
+    cy.get('button[type=submit]').click()
+    cy.contains(/déconnecter/i).click()
+    cy.visit('/login')
+    cy.get('input[name=email-input]').type(user.email)
+    cy.get('input[name=password-input]').type('newpassword')
+    cy.get('button[type=submit]').click()
+    cy.contains(/déconnecter/i)
+  })
+
+  it('je peux créer une question', () => {
+    cy.login(user.email, user.password)
+    cy.visit('/createQuestion')
+    cy.get('input[name=question-input]').type('Quelle est la signification de la vie ?')
+    cy.get('select[name=category-select]').select('Philosophie')
+    cy.get('select[name=priority-select]').select('Urgente')
+    cy.get('button[type=submit]').click()
+    cy.contains('Quelle est la signification de la vie ?')
+  })
+
+  it('je peux supprimer une question', () => {
+    cy.login(user.email, user.password)
+    cy.visit('/createQuestion')
+    cy.get('input[name=question-input]').type('Quelle est la signification de la vie ?')
+    cy.get('select[name=category-select]').select('Philosophie')
+    cy.get('select[name=priority-select]').select('Urgente')
+    cy.get('button[type=submit]').click()
+    cy.contains('Quelle est la signification de la vie ?')
+
+    cy.visit('/profile')
+    cy.contains('Quelle est la signification de la vie ?')
+    cy.get('button[name=delete-input]').click()
+    cy.contains('Quelle est la signification de la vie ?').should('not.exist')
   })
 })
