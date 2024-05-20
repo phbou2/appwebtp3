@@ -61,10 +61,27 @@ async function getCategoryById(categoryId: string) {
   }
 }
 
+async function lowerHand(userId: string) {
+  try {
+    const response = await axiosAuth.get(BACKEND_BASE_URL + '/questions', {
+      params: {
+        userId: userId
+      }
+    })
+
+    console.log(response.data)
+
+    await axiosAuth.delete(BACKEND_BASE_URL + '/questions/' + response.data[0].id)
+  } catch (error) {
+    throw parseAxiosError(error)
+  }
+}
+
 export const questionService = {
   createCategory,
   createQuestion,
   getAllQuestions,
   getAllCategories,
-  getCategoryById
+  getCategoryById,
+  lowerHand
 }

@@ -43,13 +43,22 @@ async function createNewQuestion() {
   try {
     const userId = await authStore.getUserId
 
-    console.log(priority.value)
+    if ((await questionStore.hasActiveQuestion) === true) {
+      toast.error('Vous avez déja une question en attente...', { duration: 5000 })
+    } else {
+      if (question.value === '') {
+        question.value = 'Main levé'
+      }
 
-    await questionStore.createQuestion(question.value, categoryId.value, userId, priority.value)
+      questionStore.toggleQuestionStatus()
 
-    toast.success('Question posée avec succès', { duration: 5000 })
+      await questionStore.createQuestion(question.value, categoryId.value, userId, priority.value)
 
-    router.push({ name: 'Profile' })
+      toast.success('Question posée avec succès', { duration: 5000 })
+
+      router.push({ name: 'Profile' })
+    }
+
     if (onError.value) {
       confirm("Une erreur s'est produite lors de la supprimation de l'utilisateur.")
     }
@@ -65,7 +74,7 @@ const isRequired = (value: any) => (!value ? 'Ce champ est requis.' : true)
 
 <template>
   <div>
-    <h1>Poser une question</h1>
+    <h1>Poser une question (Rien mettre dans la description pour simplement lever la main)</h1>
     <div class="container my-5">
       <div class="row justify-content-center">
         <Form @submit="createNewQuestion">
@@ -77,7 +86,6 @@ const isRequired = (value: any) => (!value ? 'Ce champ est requis.' : true)
               id="question-input"
               name="question-input"
               type="question"
-              :rules="isRequired"
               v-model="question"
             />
             <ErrorMessage class="text-danger" name="question-input" />

@@ -33,8 +33,22 @@ async function deleteUser(userId: string) {
   }
 }
 
+async function adjustScore(params: { amount: string; userId: string }) {
+  try {
+    const currentScore = (await axiosAuth.get(BACKEND_BASE_URL + '/users/' + params.userId)).data
+      .Score
+
+    const adjustedScore = currentScore + parseInt(params.amount)
+
+    await axiosAuth.patch(BACKEND_BASE_URL + '/users/' + params.userId, { Score: adjustedScore })
+  } catch (error) {
+    throw parseAxiosError(error)
+  }
+}
+
 export const userService = {
   getUserById,
   getAllUsers,
-  deleteUser
+  deleteUser,
+  adjustScore
 }

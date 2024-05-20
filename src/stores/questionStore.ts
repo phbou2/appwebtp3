@@ -5,8 +5,8 @@ import { useAuthStore } from './authStore'
 
 export const useQuestionStore = defineStore('questionStoreId', () => {
   const onError = ref(false)
-  const handRaised = ref(false)
-  const isHandRaised = computed(() => handRaised.value)
+  const activeQuestionStatus = ref(false)
+  const hasActiveQuestion = computed(() => activeQuestionStatus.value)
 
   async function getAllQuestions() {
     try {
@@ -55,8 +55,8 @@ export const useQuestionStore = defineStore('questionStoreId', () => {
     }
   }
 
-  function toggleHandRaised() {
-    handRaised.value = !handRaised.value
+  function toggleQuestionStatus() {
+    activeQuestionStatus.value = !activeQuestionStatus.value
   }
 
   async function getCategoryById(categoryId: string) {
@@ -71,14 +71,25 @@ export const useQuestionStore = defineStore('questionStoreId', () => {
     }
   }
 
+  async function lowerHand(userId: string) {
+    try {
+      onError.value = false
+
+      await questionService.lowerHand(userId)
+    } catch (error) {
+      onError.value = true
+    }
+  }
+
   return {
     onError,
-    isHandRaised,
-    toggleHandRaised,
+    hasActiveQuestion,
+    toggleQuestionStatus,
     getAllQuestions,
     getAllCategories,
     createCategory,
     createQuestion,
-    getCategoryById
+    getCategoryById,
+    lowerHand
   }
 })

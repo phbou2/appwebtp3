@@ -40,11 +40,10 @@ STUDENT :
 
 - Changer mon mot de passe
 
-- Pouvoir donner de la vie à un prof s'il a bien répondu et nous a aidés
+- Pouvoir donner de la vie à un prof s'il a bien répondu et nous a aidés //DONE
 
-- Enlever de la vie à un professeur (s'il prend trop de temps à venir répondre)
+- Enlever de la vie à un professeur (s'il prend trop de temps à venir répondre) //DONE
 
-***SUPPRIMER RETROACTIVEMENT TOUT CE QUI EST RELIE A UNE RESSOURCE SI ELLE SE FAIT SUPPRIMER***
 
 
 ***PRENDRE LES ROUTES DE FRONT-END EN CONSIDERATION : 

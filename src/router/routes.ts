@@ -7,6 +7,7 @@ import RegisterView from '../views/RegisterView.vue'
 import DeleteView from '../views/DeleteView.vue'
 import CreateCategoryView from '../views/CreateCategoryView.vue'
 import CreateQuestionView from '../views/CreateQuestionView.vue'
+import AdjustTeacherScore from '../views/AdjustTeacherScore.vue'
 
 const routes = [
   {
@@ -51,6 +52,11 @@ const routes = [
     path: '/createQuestion',
     name: 'CreateQuestion',
     component: CreateQuestionView
+  },
+  {
+    path: '/adjustTeacherScore',
+    name: 'AdjustTeacherScore',
+    component: AdjustTeacherScore
   },
   {
     path: '/:pathMatch(.*)*',

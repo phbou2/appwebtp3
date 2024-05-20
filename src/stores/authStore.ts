@@ -12,6 +12,7 @@ interface DecodedToken {
 const API_BASE_URL = 'http://127.0.0.1:3000'
 
 const DEFAULT_ROLE = 'Student'
+const DEFAULT_SCORE = '100'
 
 export const useAuthStore = defineStore('authStoreId', () => {
   const token = ref('')
@@ -63,7 +64,7 @@ export const useAuthStore = defineStore('authStoreId', () => {
     try {
       clearError()
 
-      const modifiedCredential = { ...credential, role: DEFAULT_ROLE }
+      const modifiedCredential = { ...credential, role: DEFAULT_ROLE, score: DEFAULT_SCORE }
 
       await axios.post(`${API_BASE_URL}/register`, modifiedCredential)
     } catch (error: any) {
