@@ -46,9 +46,31 @@ async function adjustScore(params: { amount: string; userId: string }) {
   }
 }
 
+async function changePassword(params: { newPassword: string; userId: string }) {
+  try {
+    await axiosAuth.patch(BACKEND_BASE_URL + '/users/' + params.userId, {
+      password: params.newPassword
+    })
+  } catch (error) {
+    throw parseAxiosError(error)
+  }
+}
+
+async function changeName(params: { newName: string; userId: string }) {
+  try {
+    await axiosAuth.patch(BACKEND_BASE_URL + '/users/' + params.userId, {
+      name: params.newName
+    })
+  } catch (error) {
+    throw parseAxiosError(error)
+  }
+}
+
 export const userService = {
   getUserById,
   getAllUsers,
   deleteUser,
-  adjustScore
+  adjustScore,
+  changePassword,
+  changeName
 }

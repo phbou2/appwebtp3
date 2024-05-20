@@ -81,6 +81,16 @@ export const useQuestionStore = defineStore('questionStoreId', () => {
     }
   }
 
+  async function deleteQuestion(questionId: string) {
+    try {
+      onError.value = false
+
+      await questionService.deleteQuestion(questionId)
+    } catch (error) {
+      onError.value = true
+    }
+  }
+
   return {
     onError,
     hasActiveQuestion,
@@ -90,6 +100,7 @@ export const useQuestionStore = defineStore('questionStoreId', () => {
     createCategory,
     createQuestion,
     getCategoryById,
-    lowerHand
+    lowerHand,
+    deleteQuestion
   }
 })

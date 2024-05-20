@@ -8,6 +8,7 @@ import DeleteView from '../views/DeleteView.vue'
 import CreateCategoryView from '../views/CreateCategoryView.vue'
 import CreateQuestionView from '../views/CreateQuestionView.vue'
 import AdjustTeacherScore from '../views/AdjustTeacherScore.vue'
+import ChangeCredentials from '../views/ChangeCredentials.vue'
 
 const routes = [
   {
@@ -57,6 +58,11 @@ const routes = [
     path: '/adjustTeacherScore',
     name: 'AdjustTeacherScore',
     component: AdjustTeacherScore
+  },
+  {
+    path: '/changeCredentials',
+    name: 'ChangeCredentials',
+    component: ChangeCredentials
   },
   {
     path: '/:pathMatch(.*)*',

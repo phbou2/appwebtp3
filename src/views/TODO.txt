@@ -6,7 +6,7 @@ TEACHER :
 
 - Voir les questions complètes (description, catégorie, etc.) //DONE
 
-- Supprimer une question
+- Supprimer une question //DONE
 
 - Créer des catégories de questions //DONE
 
@@ -14,11 +14,11 @@ TEACHER :
 
 - Me déconnecter //DONE
 
-- Changer mon nom complet ou mon mot de passe
+- Changer mon nom complet ou mon mot de passe //DONE
 
-- Donner de la vie à un étudiant (exemple s'il pose une bonne question, etc.)
+- Donner de la vie à un étudiant (exemple s'il pose une bonne question, etc.) //DONE
 
-- Enlever de la vie à un étudiant (exemple s'il pose trop de questions)
+- Enlever de la vie à un étudiant (exemple s'il pose trop de questions) //DONE
 
 
 
@@ -38,7 +38,7 @@ STUDENT :
 
 - Me déconnecter //DONE
 
-- Changer mon mot de passe
+- Changer mon mot de passe //DONE
 
 - Pouvoir donner de la vie à un prof s'il a bien répondu et nous a aidés //DONE
 

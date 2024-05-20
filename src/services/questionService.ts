@@ -69,9 +69,15 @@ async function lowerHand(userId: string) {
       }
     })
 
-    console.log(response.data)
-
     await axiosAuth.delete(BACKEND_BASE_URL + '/questions/' + response.data[0].id)
+  } catch (error) {
+    throw parseAxiosError(error)
+  }
+}
+
+async function deleteQuestion(questionId: string) {
+  try {
+    await axiosAuth.delete(BACKEND_BASE_URL + '/questions/' + questionId)
   } catch (error) {
     throw parseAxiosError(error)
   }
@@ -83,5 +89,6 @@ export const questionService = {
   getAllQuestions,
   getAllCategories,
   getCategoryById,
-  lowerHand
+  lowerHand,
+  deleteQuestion
 }

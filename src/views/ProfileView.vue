@@ -6,9 +6,12 @@ import 'vue-loading-overlay/dist/css/index.css'
 import { useAuthStore } from '../stores/authStore'
 import { useRouter } from 'vue-router'
 import { useQuestionStore } from '@/stores/questionStore'
+import 'vue-toast-notification/dist/theme-sugar.css'
+import { useToast } from 'vue-toast-notification'
 
 const authStore = useAuthStore()
 const router = useRouter()
+const toast = useToast()
 const profileStore = useProfileStore()
 const questionStore = useQuestionStore()
 
@@ -22,6 +25,9 @@ const hasActiveQuestion = computed(() => questionStore.hasActiveQuestion)
 const isLoading = ref(false)
 const questions = ref<any[] | undefined>(undefined)
 const updatedQuestions = ref<any[] | undefined>(undefined) //For front-end accessibility
+
+const ADD_SCORE_AMOUNT = '10'
+const REMOVE_SCORE_AMOUNT = '-10'
 
 onMounted(async () => {
   isLoading.value = true
@@ -52,6 +58,14 @@ async function lowerHand() {
   isLoading.value = false
 }
 
+async function deleteQuestion(userId: string) {
+  isLoading.value = true
+  await questionStore.lowerHand(userId)
+  await loadQuestions()
+  toast.success('Question supprimée avec succès', { duration: 5000 })
+  isLoading.value = false
+}
+
 async function updateUserAndCategoryNames() {
   if (!questions.value) {
     return []
@@ -71,12 +85,21 @@ async function updateUserAndCategoryNames() {
     const updatedQuestion = {
       question: question.question,
       userName: userName,
+      userId: user.id,
+      userScore: user.Score,
       categoryName: categoryName,
       priority: question.priority
     }
 
     updatedQuestions.value.push(updatedQuestion)
   }
+}
+
+async function adjustScore(params: { amount: string; userId: string }) {
+  isLoading.value = true
+  await profileStore.adjustScore(params)
+  toast.success("Ajustement au score de l'étudiant fait avec succès", { duration: 5000 })
+  isLoading.value = false
 }
 </script>
 
@@ -98,25 +121,41 @@ async function updateUserAndCategoryNames() {
                 <p class="col-1">{{ question.categoryName }}</p>
                 <button
                   class="btn btn-danger col-2"
-                  @click="deleteQuestion(question.id)"
+                  @click="deleteQuestion(question.userId)"
                   v-if="isTeacher"
                 >
                   x
                 </button>
               </div>
               <div class="card-body row bg-secondary">
-                <p class="col-3">{{ question.userName }}</p>
-                <div class="progress col-6">
-                  <div
-                    class="progress-bar progress-bar-striped progress-bar-animated bg-success"
-                    role="progressbar"
-                    :style="{ width: 100 + '%' }"
-                    aria-valuenow="50"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                  >
-                    100%
+                <div>
+                  <p class="col-3">{{ question.userName }}</p>
+                  <div class="progress col-6">
+                    <div
+                      class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                      role="progressbar"
+                      :style="{ width: question.userScore + '%' }"
+                      aria-valuenow="50"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    >
+                      {{ question.userScore + '%' }}
+                    </div>
                   </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                  <button
+                    class="btn btn-success col-3"
+                    @click="adjustScore({ amount: ADD_SCORE_AMOUNT, userId: question.userId })"
+                  >
+                    Ajouter score
+                  </button>
+                  <button
+                    class="btn btn-danger col-3"
+                    @click="adjustScore({ amount: REMOVE_SCORE_AMOUNT, userId: question.userId })"
+                  >
+                    enlever score
+                  </button>
                 </div>
               </div>
             </div>
@@ -132,12 +171,12 @@ async function updateUserAndCategoryNames() {
           <div
             class="progress-bar progress-bar-striped progress-bar-animated bg-success"
             role="progressbar"
-            :style="{ width: 100 + '%' }"
+            :style="{ width: profileStore.score + '%' }"
             aria-valuenow="50"
             aria-valuemin="0"
             aria-valuemax="100"
           >
-            100%
+            {{ profileStore.score + '%' }}
           </div>
         </div>
         <div class="col-6"></div>

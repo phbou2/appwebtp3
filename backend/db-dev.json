@@ -7,6 +7,14 @@
       "role": "Teacher",
       "id": 1,
       "Score": 100
+    },
+    {
+      "email": "test2@test.com",
+      "password": "$2a$10$/U4TD6TdllwpkXLdBzoagepGDpOGcRFTS6VHAnYGNeCKsuhpEWmX2",
+      "name": "test Brown",
+      "role": "Student",
+      "id": 2,
+      "Score": 100
     }
   ],
   "questions": [

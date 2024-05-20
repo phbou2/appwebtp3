@@ -16,12 +16,12 @@ export const useProfileStore = defineStore('profileStoreId', () => {
     email: string
     name: string
     role: string
-    score: string
+    Score: string
   }) {
     email.value = profile.email
     name.value = profile.name
     role.value = profile.role
-    score.value = profile.score
+    score.value = profile.Score
     onError.value = false
   }
 
@@ -96,6 +96,26 @@ export const useProfileStore = defineStore('profileStoreId', () => {
     }
   }
 
+  async function changePassword(params: { newPassword: string; userId: string }) {
+    try {
+      onError.value = false
+
+      await userService.changePassword(params)
+    } catch (error) {
+      onError.value = true
+    }
+  }
+
+  async function changeName(params: { newName: string; userId: string }) {
+    try {
+      onError.value = false
+
+      await userService.changeName(params)
+    } catch (error) {
+      onError.value = true
+    }
+  }
+
   return {
     email,
     name,
@@ -109,6 +129,8 @@ export const useProfileStore = defineStore('profileStoreId', () => {
     deleteUser,
     isStudent,
     getUserById,
-    adjustScore
+    adjustScore,
+    changePassword,
+    changeName
   }
 })
